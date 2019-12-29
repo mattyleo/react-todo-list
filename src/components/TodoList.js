@@ -1,33 +1,30 @@
 import React, { Component } from "react";
-
+import Item from "./TodoItem";
+import TodoItem from "./TodoItem";
 export default class TodoList extends Component {
   render() {
-    const { item, handleChange, handleSubmit, editItem } = this.props;
+    const { items, clearList, handleDelete, handleEdit } = this.props;
     return (
-      <div className="card card-body my-3">
-        <form onSubmit="{handleSubmit}">
-          <div className="input-group">
-            <div className="input-group-prepend">
-              <div className="input-group-text bg-primary text-white">
-                <i className="fas fa-book"></i>
-              </div>
-            </div>
-            <input
-              type="text"
-              className="form-control text-capitlize"
-              placeholder="add todo item"
-              value={item}
-              onChange={handleChange}
+      <ul className="list-group my-5">
+        <h3 className="text-capitalize text-center">todo list</h3>
+        {items.map(item => {
+          return (
+            <TodoItem
+              key={item.id}
+              title={item.title}
+              handleDelete={() => handleDelete(item.id)}
+              handleEdit={() => handleEdit(item.id)}
             />
-          </div>
-          <button
-            type="submit"
-            className="btn btn-block btn-primary mt-3 text-upercase"
-          >
-            add item
-          </button>
-        </form>
-      </div>
+          );
+        })}
+        <button
+          type="button"
+          className="btn btn-danger btn-block text-uppercase mt-5"
+          onClick={clearList}
+        >
+          clear list
+        </button>
+      </ul>
     );
   }
 }
